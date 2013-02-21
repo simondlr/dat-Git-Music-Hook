@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import urllib
+import urllib2
+import json
+import sys
+import os
+
+#Add your key (get it from the last.fm API: http://www.last.fm/api/accounts)
+#And add your username
+LASTFM_API_KEY = ''
+LASTFM_USER = ''
+LASTFM_API_CALL = 'http://ws.audioscrobbler.com/2.0/'
+
+def is_this_thing_on():
+    try:
+        # using IP address google.com
+        response = urllib2.urlopen('http://74.125.233.69', timeout=1)
+        return True
+    except urllib2.URLError as error:
+        pass
+    return False
+
+def add_track(commit_msg_path):
+    #get current commit message
+    f = open(commit_msg_path,'r')
+    msg = f.read()
+    f.close()
+
+    '''
+    Just a note: When you aren't currently listening a song and put the limit to 1, last.fm doesn't return it as a list.
+    If you are listening to a song and you limit it to 1, it returns 2 tracks: currently playing and the previously listened one.
+    Thus. For consistency, it's set to 2, so that it always returns a list.
+    '''
+    params = urllib.urlencode({'method':'user.getrecenttracks', 
+                               'user':LASTFM_USER, 
+                               'api_key':LASTFM_API_KEY, 
+                               'limit':2, 
+                               'format':'json'})
+    try:
+        # connect to Last.fm and get our current track
+        response = urllib2.urlopen(LASTFM_API_CALL + '?%s' % params)
+        data = json.load(response)
+
+        # TODO - handle error code from Last.fm
+    
+        song_str = "- Listened to: " + data['recenttracks']['track'][0]['artist']['#text'] + ' - ' + data['recenttracks']['track'][0]['name'] 
+
+        msg = msg + song_str
+        c_f = open(commit_msg_path,'w')
+        c_f.write(msg)
+        c_f.close()
+
+    except urllib2.URLError as error:
+        # we couldn't access Last.fm
+        # return without changing the commit msg
+        pass
+    except Exception as e:
+        print e
+        pass
+
+if __name__ == '__main__':
+    try:
+        if len(sys.argv) > 1:
+            if is_this_thing_on():
+                add_track(commit_msg_path=sys.argv[1])
+            else:
+                print "Couldn't connect to the internet. Continuing without adding the song."
+    except KeyboardInterrupt:
+        print '\n\nProgram interrupted. Commit aborted.'
+        sys.exit(1)
+    except Exception as e:
+        print e
+        print '\n\nError occurred. Commit aborted.'
+        sys.exit(1)
+
+
