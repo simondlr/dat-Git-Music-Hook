@@ -33,6 +33,8 @@ To not use the githook, simply add the "-n" or "--no-verify" flag to your commit
 
 Jacques Bruwer and Simon de la Rouviere. Cool, cool cool cool.
 
+Understanding of githooks using Python was gleamed/taken from Sprint.ly's [commit-msg githook](https://github.com/nextbigsoundinc/Sprintly-GitHub).
+
 ### MIT License ###
 
 Copyright (c) 2012 Simon de la Rouviere, Jacques Bruwer
