@@ -12,6 +12,7 @@ LASTFM_USER = ''
 LASTFM_API_CALL = 'http://ws.audioscrobbler.com/2.0/'
 
 def is_this_thing_on():
+    #Check if there is any internet connection
     try:
         # using IP address google.com
         response = urllib2.urlopen('http://74.125.233.69', timeout=1)
