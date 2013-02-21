@@ -20,10 +20,11 @@ Once copied, you will need to add 2 variables (LASTFM_API_KEY, LAST_FM_USER): an
 
 and it will automagically append it to something like this in your commit message:
 
-`Date:   Thu Feb 21 10:38:58 2013 +0200
+` Date:   Thu Feb 21 10:38:58 2013 +0200
 
     Initial Commit
-    - Listened to: Eskmo - Oh in This World of Dread, Carry On`
+    - Listened to: Eskmo - Oh in This World of Dread, Carry On
+`
 
 To not use the githook, simply add the "-n" or "--no-verify" flag to your commits. This will skip the "commit-msg" hook.
 
