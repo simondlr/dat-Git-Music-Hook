@@ -29,7 +29,7 @@ Date:   Thu Feb 21 10:38:58 2013 +0200
 
 To not use the githook, simply add the "-n" or "--no-verify" flag to your commits. This will skip the "commit-msg" hook.
 
-`git commit -nm "Removed ruby security lols."`
+`git commit -nm "Removed rails security bugs."`
 
 ### Authors/Contributors ###
 
