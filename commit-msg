@@ -4,6 +4,7 @@ import urllib2
 import json
 import sys
 import os
+import codecs
 
 #Add your key (get it from the last.fm API: http://www.last.fm/api/accounts)
 #And add your username
@@ -44,10 +45,12 @@ def add_track(commit_msg_path):
 
         # TODO - handle error code from Last.fm
     
-        song_str = "- Listened to: " + data['recenttracks']['track'][0]['artist']['#text'] + ' - ' + data['recenttracks']['track'][0]['name'] 
+        artist = data['recenttracks']['track'][0]['artist']['#text']
+        track = data['recenttracks']['track'][0]['name']
 
-        msg = msg + song_str
-        c_f = open(commit_msg_path,'w')
+        msg = u'{}- Listened to: {} - {}'.format(msg, artist, track)
+
+        c_f = codecs.open(commit_msg_path, 'w', 'utf-8')
         c_f.write(msg)
         c_f.close()
 
@@ -73,5 +76,3 @@ if __name__ == '__main__':
         print e
         print '\n\nError occurred. Commit aborted.'
         sys.exit(1)
-
-
